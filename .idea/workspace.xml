@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="690dc52e-de43-48ec-b7c1-3f1aa0aafaf7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/fitra_back/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/Fitra.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/api/routes/diet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/core/openai_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/db/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/db/session.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/models/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/models/meal_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/models/user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/routes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/routes/diet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/routes/training.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/schemas/diet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/schemas/training.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/services/diet_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitra_back/app/services/training_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitra_front/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/fitra_front/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitra_front/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/fitra_front/src/app/page.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/fitra_front" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="35RSVjvBNVlXL8jovpuFa1pDQpW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.main.executor": "Run",
+    "Python.uvicorn.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/muraokakanemichi/Desktop/Fitra",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.27715737",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="uvicorn" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Fitra" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="OPENAI_API_KEY" value="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" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.9 virtualenv at ~/PycharmProjects/PythonProject1/.venv" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="uvicorn" />
+      <option name="PARAMETERS" value="app.main:app --reload --port 8001" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="デフォルトタスク">
+      <changelist id="690dc52e-de43-48ec-b7c1-3f1aa0aafaf7" name="Changes" comment="" />
+      <created>1761209650617</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761209650617</updated>
+      <workItem from="1763071418013" duration="2482000" />
+      <workItem from="1763074113801" duration="1814000" />
+      <workItem from="1763078223349" duration="1529000" />
+      <workItem from="1763153977889" duration="2257000" />
+      <workItem from="1763156635428" duration="11453000" />
+      <workItem from="1763246244709" duration="12215000" />
+      <workItem from="1763677372210" duration="18137000" />
+      <workItem from="1763959729438" duration="2000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Fitra$main.coverage" NAME="uvicorn Coverage Results" MODIFIED="1763158928231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Fitra$uvicorn.coverage" NAME="uvicorn Coverage Results" MODIFIED="1763864040574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
