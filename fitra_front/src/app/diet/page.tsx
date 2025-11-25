@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 const API_URL = "http://localhost:8001/diet/analyze";
 
@@ -50,17 +51,6 @@ export default function DietPage() {
       const data = await res.json();
       console.log("API raw diet:", data);
 
-      // 将来 JSON で返す場合を想定（例）
-      // {
-      //   "score": 72,
-      //   "good_points": [...],
-      //   "improvements": [...],
-      //   "lacking_nutrients": [...],
-      //   "next_choices": [...],
-      //   "pfc": { "protein": 25, "fat": 15, "carb": 60 },
-      //   "calories": 520,
-      //   "rawText": "..."
-      // }
       if (data.score !== undefined) {
         const parsed: DietAnalysis = {
           score:
@@ -118,22 +108,34 @@ export default function DietPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4 py-10">
       <div className="max-w-5xl w-full bg-slate-900/70 rounded-2xl shadow-xl border border-slate-800 px-6 py-6 md:px-10 md:py-8 space-y-8">
-        {/* ヘッダー */}
-        <header className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-blue-400/80">
-            FITRA / DIET ANALYZER
-          </p>
-          <h1 className="text-2xl md:text-3xl font-semibold">
-            食事AIアナリスト{" "}
-            <span className="text-sm font-normal text-slate-400 align-middle">
-              （ダイエット用）
-            </span>
-          </h1>
-          <p className="text-sm md:text-base text-slate-300">
-            食べたものをそのまま入力すると、AIがダイエット目線で
-            <span className="text-blue-300"> スコア・PFCバランス・改善点</span>
-            を整理してくれます。
-          </p>
+        {/* ヘッダー + ホームへ戻る */}
+        <header className="flex items-start justify-between gap-4">
+          <div className="space-y-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-blue-400/80">
+              FITRA / DIET ANALYZER
+            </p>
+            <h1 className="text-2xl md:text-3xl font-semibold">
+              食事AIアナリスト{" "}
+              <span className="text-sm font-normal text-slate-400 align-middle">
+                （ダイエット用）
+              </span>
+            </h1>
+            <p className="text-sm md:text-base text-slate-300">
+              食べたものをそのまま入力すると、AIがダイエット目線で
+              <span className="text-blue-300">
+                {" "}
+                スコア・PFCバランス・改善点
+              </span>
+              を整理してくれます。
+            </p>
+          </div>
+
+          <Link
+            href="/"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-400 hover:text-blue-200 transition"
+          >
+            ← ホームへ戻る
+          </Link>
         </header>
 
         {/* 入力エリア */}
@@ -308,7 +310,7 @@ function PfcCard({
     );
   }
 
-  const total = (pfc.protein ?? 0) + (pfc.fat ?? 0) + (pfc.carb ?? 0) || 1; // 0割り防止
+  const total = (pfc.protein ?? 0) + (pfc.fat ?? 0) + (pfc.carb ?? 0) || 1;
   const ratio = {
     protein: ((pfc.protein ?? 0) / total) * 100,
     fat: ((pfc.fat ?? 0) / total) * 100,

@@ -1,0 +1,57 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model TrainingRecord {
+  id          String         @id @default(cuid())
+  date        DateTime
+  totalVolume Int
+  totalSets   Int
+  totalReps   Int
+  rows        TrainingRow[]
+  createdAt   DateTime       @default(now())
+}
+
+model TrainingRow {
+  id        String         @id @default(cuid())
+  name      String
+  weight    Int
+  reps      Int
+  sets      Int
+  volume    Int
+  record    TrainingRecord @relation(fields: [recordId], references: [id])
+  recordId  String
+}
+
+model MealLog {
+  id  String @id @default(cuid())
+  name String
+  createdAt DateTime @default(now())
+  mealType String
+  timestamp DateTime
+  totalCalories Float @default(0)
+  totalFat      Float     @default(0)
+  totalCarbs    Float     @default(0)
+  totalProtein Float @default(0)
+  items FoodItem[]
+}
+
+model FoodItem {
+  id        String    @id @default(cuid())
+  meal      MealLog   @relation(fields: [mealId], references: [id])
+  mealId    String
+
+  name      String     // 食べ物名
+  amount    Float      // 量（g, mlなど）
+  
+  calories  Float
+  protein   Float
+  fat       Float
+  carbs     Float
+}

@@ -92,7 +92,7 @@ export default function Home() {
               <FeatureCard
                 title="🏋️ トレーニングAI"
                 desc="種目・重量・レップを入力すると、負荷評価・改善点・次回の最適メニューをAIが生成。"
-                link="/training"
+                link="/training/step1"
                 linkLabel="運動を解析する →"
               />
               <FeatureCard

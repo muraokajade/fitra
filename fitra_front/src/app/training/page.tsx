@@ -1,7 +1,127 @@
-// src/app/training/page.tsx
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import Link from "next/link";
+
+/* ============================================================
+   種目カテゴリ + 100種目データ
+   ============================================================ */
+type ExerciseOption = { value: string; label: string };
+
+const EXERCISE_GROUPS: { group: string; options: ExerciseOption[] }[] = [
+  {
+    group: "胸（Chest）",
+    options: [
+      { value: "bench_press", label: "ベンチプレス" },
+      { value: "incline_bench_press", label: "インクラインベンチプレス" },
+      { value: "decline_bench_press", label: "デクラインベンチプレス" },
+      { value: "dumbbell_press", label: "ダンベルプレス" },
+      { value: "incline_dumbbell_press", label: "インクラインダンベルプレス" },
+      { value: "dumbbell_fly", label: "ダンベルフライ" },
+      { value: "cable_fly", label: "ケーブルフライ" },
+      { value: "pec_deck_fly", label: "ペックデックフライ" },
+      { value: "push_up", label: "プッシュアップ" },
+      { value: "weighted_push_up", label: "加重プッシュアップ" },
+      { value: "machine_chest_press", label: "チェストプレス（マシン）" },
+      { value: "smith_bench_press", label: "スミスベンチプレス" },
+    ],
+  },
+  {
+    group: "背中（Back）",
+    options: [
+      { value: "deadlift", label: "デッドリフト" },
+      { value: "roman_deadlift", label: "ルーマニアンデッドリフト" },
+      { value: "sumo_deadlift", label: "相撲デッドリフト" },
+      { value: "lat_pulldown", label: "ラットプルダウン" },
+      { value: "reverse_grip_pulldown", label: "リバースグリップラットプル" },
+      { value: "vbar_pulldown", label: "Vバーラットプル" },
+      { value: "seated_row", label: "シーテッドロー" },
+      { value: "tbar_row", label: "Tバーロー" },
+      { value: "barbell_row", label: "バーベルロー" },
+      { value: "dumbbell_row", label: "ワンハンドダンベルロー" },
+      { value: "machine_row", label: "ローイング（マシン）" },
+      { value: "face_pull", label: "フェイスプル" },
+      { value: "pull_up", label: "懸垂" },
+      { value: "chin_up", label: "チンニング" },
+      { value: "good_morning", label: "グッドモーニング" },
+      { value: "back_extension", label: "バックエクステンション" },
+    ],
+  },
+  {
+    group: "脚（Legs）",
+    options: [
+      { value: "squat", label: "スクワット" },
+      { value: "front_squat", label: "フロントスクワット" },
+      { value: "hack_squat", label: "ハックスクワット" },
+      { value: "leg_press", label: "レッグプレス" },
+      { value: "lunges", label: "ランジ" },
+      { value: "bulgarian_split_squat", label: "ブルガリアンスクワット" },
+      { value: "leg_extension", label: "レッグエクステンション" },
+      { value: "leg_curl", label: "レッグカール" },
+      { value: "romanian_deadlift", label: "ルーマニアンデッドリフト" },
+      { value: "hip_thrust", label: "ヒップスラスト" },
+      { value: "glute_bridge", label: "グルートブリッジ" },
+      { value: "calf_raise", label: "カーフレイズ" },
+      { value: "seated_calf_raise", label: "シーテッドカーフレイズ" },
+      { value: "sumo_squat", label: "相撲スクワット" },
+      { value: "box_squat", label: "ボックススクワット" },
+      { value: "step_up", label: "ステップアップ" },
+      { value: "machine_adductor", label: "内転筋マシン" },
+      { value: "machine_abductor", label: "外転筋マシン" },
+    ],
+  },
+  {
+    group: "肩（Shoulders）",
+    options: [
+      { value: "shoulder_press", label: "ショルダープレス" },
+      { value: "smith_shoulder_press", label: "スミスショルダープレス" },
+      { value: "military_press", label: "ミリタリープレス" },
+      { value: "arnold_press", label: "アーノルドプレス" },
+      { value: "side_raise", label: "サイドレイズ" },
+      { value: "front_raise", label: "フロントレイズ" },
+      { value: "rear_delt_fly", label: "リアデルトフライ" },
+      { value: "cable_lateral_raise", label: "ケーブルサイドレイズ" },
+      { value: "upright_row", label: "アップライトロー" },
+      { value: "face_pull", label: "フェイスプル（肩後部）" },
+      { value: "dumbbell_shoulder_press", label: "ダンベルショルダープレス" },
+      { value: "machine_shoulder_press", label: "ショルダープレス（マシン）" },
+      { value: "machine_rear_delt", label: "リアデルトマシン" },
+      { value: "plate_raise", label: "プレートレイズ" },
+      { value: "shrug", label: "シュラッグ" },
+    ],
+  },
+  {
+    group: "腕（Arms）",
+    options: [
+      { value: "barbell_curl", label: "バーベルカール" },
+      { value: "dumbbell_curl", label: "ダンベルカール" },
+      { value: "hammer_curl", label: "ハンマーカール" },
+      { value: "preacher_curl", label: "プリーチャーカール" },
+      { value: "cable_curl", label: "ケーブルカール" },
+      { value: "triceps_pushdown", label: "トライセプスプッシュダウン" },
+      { value: "rope_pushdown", label: "ローププッシュダウン" },
+      { value: "french_press", label: "フレンチプレス" },
+      { value: "skull_crusher", label: "スカルクラッシャー" },
+      { value: "dips", label: "ディップス" },
+      { value: "close_grip_bench", label: "ナローベンチプレス" },
+      { value: "kickback", label: "キックバック" },
+      { value: "reverse_curl", label: "リバースカール" },
+      { value: "concentration_curl", label: "コンセントレーションカール" },
+      { value: "overhead_extension", label: "オーバーヘッドエクステンション" },
+      { value: "machine_arm_curl", label: "アームカール（マシン）" },
+    ],
+  },
+];
+
+/* ============================================================
+   型
+   ============================================================ */
+type TrainingExercise = {
+  name: string;
+  weight: number;
+  reps: number;
+  sets: number;
+};
 
 type TrainingAnalysis = {
   score: number | null;
@@ -19,19 +139,50 @@ const initialAnalysis: TrainingAnalysis = {
   nextActions: [],
 };
 
+/* ============================================================
+   メインコンポーネント
+   ============================================================ */
 export default function TrainingPage() {
-  const [input, setInput] = useState("");
+  const [notes, setNotes] = useState(""); // AI用コメント
+
+  const [selectedExercise, setSelectedExercise] = useState("bench_press");
+  const [weight, setWeight] = useState("");
+  const [reps, setReps] = useState("");
+  const [sets, setSets] = useState("");
+
+  const [exerciseList, setExerciseList] = useState<TrainingExercise[]>([]);
   const [analysis, setAnalysis] = useState<TrainingAnalysis>(initialAnalysis);
   const [rawText, setRawText] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+  const [loading, setLoading] = useState(false);
+
+  /* ---------------------------- */
+  /* 種目追加 */
+  /* ---------------------------- */
+  const addExercise = () => {
+    if (!weight || !reps || !sets) return;
+
+    const ex = {
+      name: selectedExercise,
+      weight: Number(weight),
+      reps: Number(reps),
+      sets: Number(sets),
+    };
+
+    setExerciseList((prev) => [...prev, ex]);
+
+    setWeight("");
+    setReps("");
+    setSets("");
+  };
+
+  /* ---------------------------- */
+  /* API 呼び出し */
+  /* ---------------------------- */
+  const analyzeTraining = async () => {
+    if (exerciseList.length === 0) return;
 
     setLoading(true);
-    setError(null);
 
     try {
       const baseUrl =
@@ -40,142 +191,209 @@ export default function TrainingPage() {
       const res = await fetch(`${baseUrl}/training/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({
+          text: notes,
+          exercises: exerciseList,
+        }),
       });
 
-      if (!res.ok) throw new Error("API error");
-
       const data = await res.json();
-      const text: string =
+
+      const text =
         data.result_text ?? data.text ?? JSON.stringify(data, null, 2);
 
       setRawText(text);
       setAnalysis(parseTrainingText(text));
-    } catch (err) {
-      console.error(err);
-      setError("トレーニング分析APIの呼び出しに失敗しました。");
+    } catch (e) {
+      console.error(e);
+      alert("AIサーバー接続エラー");
     } finally {
       setLoading(false);
     }
   };
 
+  /* ============================================================
+     UI
+     ============================================================ */
   return (
     <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4 py-10">
       <div className="max-w-5xl w-full bg-slate-900/70 rounded-2xl shadow-xl border border-slate-800 px-6 py-6 md:px-10 md:py-8 space-y-8">
-        {/* ヘッダー（食事ページ寄せ） */}
-        <header className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
-            FITRA / TRAINING ANALYZER
-          </p>
-          <h1 className="text-2xl md:text-3xl font-semibold">
-            トレーニングAIアナリスト
-            <span className="text-sm font-normal text-slate-400 align-middle ml-2">
-              （筋トレ・有酸素の振り返り用）
-            </span>
-          </h1>
-          <p className="text-sm md:text-base text-slate-300">
-            その日のトレーニング内容を入力すると、AIが
-            <span className="text-emerald-300">
-              {" "}
-              スコア・良かった点・改善ポイント・次の一手
-            </span>
-            を整理してくれます。
-          </p>
+        {/* ヘッダー + ホームへ戻る */}
+        <header className="flex items-start justify-between gap-4">
+          <div className="space-y-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-blue-400/80">
+              FITRA / TRAINING ANALYZER
+            </p>
+            <h1 className="text-2xl md:text-3xl font-semibold">
+              トレーニングAIアナリスト{" "}
+              <span className="text-sm font-normal text-slate-400 align-middle">
+                （筋トレ用）
+              </span>
+            </h1>
+            <p className="text-sm md:text-base text-slate-300">
+              種目・重量・レップ・セットを入力すると、AIが
+              <span className="text-blue-300">
+                {" "}
+                スコア・良い点・改善ポイント・次の一手
+              </span>
+              を整理してくれます。
+            </p>
+          </div>
+
+          <Link
+            href="/"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-400 hover:text-blue-200 transition"
+          >
+            ← ホームへ戻る
+          </Link>
         </header>
 
-        {/* 入力エリア（食事ページとトーン合わせ） */}
-        <section className="space-y-3">
-          <label className="block text-sm font-medium text-slate-200">
-            トレーニング内容
-          </label>
-          <textarea
-            className="w-full h-32 md:h-40 rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm md:text-base text-slate-50 outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="例：インクラインベンチプレス 50kg × 10回 × 2セット、ラットプルダウン 45kg × 12回 × 3セット、有酸素20分 など"
-          />
+        {/* ----------------------------
+            種目入力エリア
+        ---------------------------- */}
+        <section className="space-y-6">
+          <h2 className="text-sm font-medium text-slate-200">種目を追加</h2>
 
-          {/* ボタンの存在感アップ＆位置も右寄せで統一 */}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              onClick={(e) => {
-                // form をやめているので直接ハンドラ呼び出し
-                // 既存のロジックを流用するためにダミーイベントを作る
-                handleSubmit(e as unknown as FormEvent);
-              }}
-              disabled={loading || !input.trim()}
-              className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white 
-                         shadow-sm shadow-emerald-500/40 hover:bg-emerald-400 
-                         disabled:opacity-60 disabled:cursor-not-allowed transition"
-            >
-              {loading ? "AIが分析中…" : "AIにトレーニング評価してもらう"}
-            </button>
+          {/* 種目セレクト */}
+          <select
+            value={selectedExercise}
+            onChange={(e) => setSelectedExercise(e.target.value)}
+            className="w-full rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            {EXERCISE_GROUPS.map((g) => (
+              <optgroup key={g.group} label={g.group}>
+                {g.options.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+
+          {/* 数値入力3つ */}
+          <div className="grid grid-cols-3 gap-4">
+            <input
+              type="number"
+              placeholder="重量 (kg)"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              className="rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <input
+              type="number"
+              placeholder="レップ"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+              className="rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <input
+              type="number"
+              placeholder="セット"
+              value={sets}
+              onChange={(e) => setSets(e.target.value)}
+              className="rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
           </div>
-        </section>
 
-        {/* 分析結果エリア（構造はほぼ既存・見た目だけ食事ページ寄せ） */}
-        <section className="space-y-4">
-          <h2 className="text-sm font-medium text-slate-200">分析結果</h2>
+          <button
+            onClick={addExercise}
+            className="w-full inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-500/30 hover:bg-blue-500 transition"
+          >
+            種目をリストに追加
+          </button>
 
-          {error && (
-            <div className="rounded-xl border border-red-500/40 bg-red-950/40 px-3 py-2 text-sm text-red-100">
-              {error}
-            </div>
-          )}
-
-          {!error && !rawText && (
-            <p className="text-sm text-slate-500">
-              トレーニング内容を入力して「AIにトレーニング評価してもらう」を押すと、ここに結果が表示されます。
-            </p>
-          )}
-
-          {rawText && (
-            <div className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                {/* スコアカード */}
-                <TrainingScoreCard analysis={analysis} />
-
-                {/* リスト群 */}
-                <div className="space-y-4">
-                  <CardList
-                    title="良い点"
-                    items={analysis.goodPoints}
-                    emptyText="今回は特にピックアップされた良い点はありません。"
-                  />
-                  <CardList
-                    title="改善ポイント"
-                    items={analysis.improvementPoints}
-                    emptyText="大きな改善ポイントは特に出ていません。"
-                  />
-                  <CardList
-                    title="次にやるべきこと"
-                    items={analysis.nextActions}
-                    emptyText="次のアクション提案はありません。もう少し具体的に入力してもOKです。"
-                  />
-                </div>
-
-                {/* 生レスポンス（デバッグ用） */}
-                <div className="md:col-span-2">
-                  <details className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-xs text-slate-400">
-                    <summary className="cursor-pointer text-slate-300">
-                      生のAIレスポンスを表示（デバッグ用）
-                    </summary>
-                    <pre className="mt-2 max-h-60 overflow-auto whitespace-pre-wrap text-[10px]">
-                      {rawText}
-                    </pre>
-                  </details>
-                </div>
-              </div>
+          {/* 追加済みの種目リスト */}
+          {exerciseList.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm text-slate-400">今日のメニュー：</p>
+              <ul className="space-y-1 text-sm text-slate-200">
+                {exerciseList.map((ex, i) => (
+                  <li
+                    key={i}
+                    className="border-b border-slate-800 pb-1 flex items-center justify-between"
+                  >
+                    <span className="truncate">
+                      {ex.name} / {ex.weight}kg / {ex.reps}回 / {ex.sets}セット
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </section>
+
+        {/* ----------------------------
+            コメント（AI用）
+        ---------------------------- */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-medium text-slate-200">
+            自由コメント（任意）
+          </h2>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            className="w-full h-32 rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-50 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            placeholder="例：今日は疲れていたけどスクワットを頑張った、ベンチのフォームを意識した 等"
+          />
+        </section>
+
+        {/* ----------------------------
+            AI分析
+        ---------------------------- */}
+        <button
+          disabled={exerciseList.length === 0 || loading}
+          onClick={analyzeTraining}
+          className="w-full inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-500/40 hover:bg-blue-500 disabled:opacity-60 disabled:cursor-not-allowed transition"
+        >
+          {loading ? "AIが解析中…" : "AIにトレーニング評価をしてもらう"}
+        </button>
+
+        {/* ----------------------------
+            結果表示
+        ---------------------------- */}
+        {rawText && (
+          <section className="space-y-6 mt-4">
+            <TrainingScoreCard analysis={analysis} />
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <CardList
+                title="良い点"
+                items={analysis.goodPoints}
+                emptyText="良い点は特にありません。"
+              />
+              <CardList
+                title="改善ポイント"
+                items={analysis.improvementPoints}
+                emptyText="改善ポイントは特に出ていません。"
+              />
+            </div>
+
+            <CardList
+              title="次にやるべきこと"
+              items={analysis.nextActions}
+              emptyText="次のアクション提案はありません。"
+            />
+
+            {/* 生ログ（デバッグ） */}
+            <details className="text-xs text-slate-400 border border-slate-800 rounded-xl bg-slate-900/80 p-3">
+              <summary className="cursor-pointer select-none text-[11px] uppercase tracking-wide text-slate-500">
+                生のAIレスポンスを表示（デバッグ用）
+              </summary>
+              <pre className="whitespace-pre-wrap mt-2 text-[10px]">
+                {rawText}
+              </pre>
+            </details>
+          </section>
+        )}
       </div>
     </main>
   );
 }
 
-/* --- 見た目寄せしたスコアカード --- */
+/* ============================================================
+   スコアカード
+   ============================================================ */
 function TrainingScoreCard({ analysis }: { analysis: TrainingAnalysis }) {
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900/80 px-5 py-4 flex flex-col justify-between">
@@ -185,7 +403,7 @@ function TrainingScoreCard({ analysis }: { analysis: TrainingAnalysis }) {
         </p>
         {analysis.score !== null ? (
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-emerald-400">
+            <span className="text-3xl font-bold text-blue-400">
               {analysis.score}
             </span>
             <span className="text-xs text-slate-400">/ 100</span>
@@ -202,7 +420,7 @@ function TrainingScoreCard({ analysis }: { analysis: TrainingAnalysis }) {
         <div className="mt-3 space-y-1">
           <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
             <div
-              className="h-full bg-emerald-400 transition-[width]"
+              className="h-full bg-blue-500 transition-[width]"
               style={{
                 width: `${Math.min(100, Math.max(0, analysis.score))}%`,
               }}
@@ -218,6 +436,9 @@ function TrainingScoreCard({ analysis }: { analysis: TrainingAnalysis }) {
   );
 }
 
+/* ============================================================
+   カードリスト（良い点/改善点/次アクション）
+   ============================================================ */
 function CardList({
   title,
   items,
@@ -236,7 +457,7 @@ function CardList({
         <ul className="space-y-1 text-xs text-slate-300">
           {items.map((item, i) => (
             <li key={i} className="flex gap-2">
-              <span className="mt-[3px] h-[6px] w-[6px] rounded-full bg-emerald-400" />
+              <span className="mt-[3px] h-[6px] w-[6px] rounded-full bg-blue-400" />
               {item}
             </li>
           ))}
@@ -246,47 +467,43 @@ function CardList({
   );
 }
 
-/* 解析の簡易パーサ（バックエンドが整ったら共通化） */
+/* ============================================================
+   AIテキスト解析（スコア・良い点など抽出）
+   ============================================================ */
 function parseTrainingText(text: string): TrainingAnalysis {
-  const lines = text
-    .split("\n")
-    .map((l) => l.trim())
-    .filter(Boolean);
+  const lines = text.split("\n").map((l) => l.trim());
 
   const good: string[] = [];
   const bad: string[] = [];
   const next: string[] = [];
   const summary: string[] = [];
-  let section: "good" | "bad" | "next" | "other" = "other";
+
+  let section: "good" | "bad" | "next" | "summary" = "summary";
 
   for (const line of lines) {
     const lower = line.toLowerCase();
 
-    if (lower.includes("良い") || lower.includes("good")) {
+    if (lower.includes("良い点")) {
       section = "good";
       continue;
     }
-    if (
-      lower.includes("改善") ||
-      lower.includes("bad") ||
-      lower.includes("improve")
-    ) {
+    if (lower.includes("改善点")) {
       section = "bad";
       continue;
     }
-    if (lower.includes("次") || lower.includes("next")) {
+    if (lower.includes("次にやるべき")) {
       section = "next";
       continue;
     }
 
-    if (section === "good") good.push(clean(line));
-    else if (section === "bad") bad.push(clean(line));
-    else if (section === "next") next.push(clean(line));
+    if (section === "good") good.push(line.replace(/^[-・◆●]/, ""));
+    else if (section === "bad") bad.push(line.replace(/^[-・◆●]/, ""));
+    else if (section === "next") next.push(line.replace(/^[-・◆●]/, ""));
     else summary.push(line);
   }
 
-  const scoreMatch = text.match(/(\d{1,3})\s*点|score[:：]\s*(\d{1,3})/i);
-  const score = scoreMatch ? Number(scoreMatch[1] ?? scoreMatch[2]) : null;
+  const scoreMatch = text.match(/score[:：]\s*(\d{1,3})/i);
+  const score = scoreMatch ? Number(scoreMatch[1]) : null;
 
   return {
     score,
@@ -296,5 +513,3 @@ function parseTrainingText(text: string): TrainingAnalysis {
     nextActions: next,
   };
 }
-
-const clean = (t: string) => t.replace(/^[-・◆●]/, "").trim();
