@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes.diet import router as diet_router
+from app.routes.auth import router as auth_router
 from app.db.session import engine
 from app.models.base import Base
 from dotenv import load_dotenv
@@ -34,6 +35,7 @@ def on_start_up():
 
 app.include_router(diet_router)
 app.include_router(training.router)
+app.include_router(auth_router)
 @app.get("/")
 def root():
     return {"message": "Fitra API Running"}
