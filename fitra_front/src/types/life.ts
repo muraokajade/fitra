@@ -7,10 +7,9 @@ export type LifeInput = {
 };
 
 export type LifeSummary = {
-  sleepHours: number;
+  sleep: number;
   fatigue: number;
   stress: number;
-  recoveryScore: number; // 0〜100
 };
 
 export type LifeFeedbackRequest = {

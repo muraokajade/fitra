@@ -34,3 +34,10 @@ export type TrainingFeedbackRequest = {
 export type TrainingFeedbackResponse = {
   feedback: string;
 };
+// 👇 追加（1日分のトレまとめ）
+export type TrainingSummary = {
+  totalVolume: number;
+  totalSets: number;
+  totalReps: number;
+  rows: TrainingRow[];
+};
