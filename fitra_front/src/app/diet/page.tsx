@@ -2,16 +2,23 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 
 import type { AiFeedbackRequest } from "@/types/ai";
 import type { DietSummary } from "@/types/diet";
 import type { UserLevel, UserGoal } from "@/types/user";
 
 export default function DietPage() {
-  const [input, setInput] = React.useState("");
+
   const [feedback, setFeedback] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const {
+    value: input,
+    setValue: setInput,
+    hydrated,
+
+  } = useLocalStorageState<string>("fitra:diet:lastInput", "");
 
   // 仮ユーザー設定（あとで /mypage と連動）
   const userLevel: UserLevel = "beginner";

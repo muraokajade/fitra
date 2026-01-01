@@ -1,4 +1,7 @@
-// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -25,6 +28,7 @@ model TrainingRow {
   reps      Int
   sets      Int
   volume    Int
+  createdAt   DateTime       @default(now())
   record    TrainingRecord @relation(fields: [recordId], references: [id])
   recordId  String
 }

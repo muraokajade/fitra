@@ -13,5 +13,22 @@ export function useLocalStorageState<T>(key: string, initial: T){
         }finally {
             setHydrated(true)
         }
-    })
+    },[key])
+
+    useEffect(() => {
+        if(!hydrated) return;
+        try {
+            localStorage.setItem(key, JSON.stringify(value))
+        } catch{
+
+        }
+    },[key, value, hydrated])
+
+      // ★ 追加
+    const remove = () => {
+        localStorage.removeItem(key);
+        setValue(initial); // 状態も初期化
+    };
+
+    return {value, remove, setValue, hydrated} as const;
 }
